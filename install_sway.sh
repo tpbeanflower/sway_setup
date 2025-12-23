@@ -1,13 +1,15 @@
 #!/bin/bash
 
+# Set up some basic values and help functions
 RED="\e[0;31m"
 GREEN="\e[0;32m"
 YELLOW="\e[0;33m"
 CYAN="\e[0;36m"
-NC="\e[0m"
+RESET="\e[0m"
+CONFIG_DIR="$HOME/.config"
 
-die() { echo -e "${RED}$*${NC}" >&2; exit 1; }
-msg() { echo -e "${CYAN}$*${NC}"; }
+die() { echo -e "${RED}$*${RESET}" >&2; exit 1; }
+msg() { echo -e "${CYAN}$*${RESET}"; }
 
 help() {
     echo "Usage: $0 [-h] [-d DISTRO]"
@@ -45,6 +47,7 @@ fi
 
 DISPLAY_PKGS=(
     "gdm"
+    "sddm"
 )
 
 SWAY_CORE=(
@@ -99,4 +102,14 @@ elif [[ "$DISTRO" == "arch" ]]; then
 fi
 
 sudo systemctl enable NetworkManager.service
-sudo systemctl enable gdm.service
+# sudo systemctl enable gdm.service
+sudo systemctl enable sddm.service
+
+# Setup folders and copy the config files
+xdg-user-dirs-update
+# mkdir -p "${CONFIG_DIR}/sway"
+# mkdir -p "${CONFIG_DIR}/waybar"
+# mkdir -p "${CONFIG_DIR}/rofi"
+# mkdir -p "${CONFIG_DIR}/foot"
+
+cp -r ./config/ "${CONFIG_DIR}/"
