@@ -7,6 +7,7 @@ YELLOW="\e[0;33m"
 CYAN="\e[0;36m"
 RESET="\e[0m"
 CONFIG_DIR="$HOME/.config"
+FONT_DIR="$HOME/.local/share/fonts"
 
 die() { echo -e "${RED}$*${RESET}" >&2; exit 1; }
 msg() { echo -e "${CYAN}$*${RESET}"; }
@@ -47,7 +48,6 @@ fi
 
 DISPLAY_PKGS=(
     "gdm"
-    "sddm"
 )
 
 SWAY_CORE=(
@@ -102,8 +102,7 @@ elif [[ "$DISTRO" == "arch" ]]; then
 fi
 
 sudo systemctl enable NetworkManager.service
-# sudo systemctl enable gdm.service
-sudo systemctl enable sddm.service
+sudo systemctl enable gdm.service
 
 # Setup folders and copy the config files
 xdg-user-dirs-update
@@ -112,4 +111,13 @@ xdg-user-dirs-update
 # mkdir -p "${CONFIG_DIR}/rofi"
 # mkdir -p "${CONFIG_DIR}/foot"
 
-cp -r ./config/ "${CONFIG_DIR}/"
+cp -r ./config/. "${CONFIG_DIR}/"
+
+# Install fonts
+mkdir -p $FONT_DIR
+wget -q --force-progress https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
+unzip JetBrainsMono.zip -d "$FONT_DIR/jetbrains-mono-nerd-font"
+rm JetBrainsMono.zip
+wget -q --force-progress https://github.com/FortAwesome/Font-Awesome/releases/download/7.1.0/fontawesome-free-7.1.0-desktop.zip
+unzip fontawesome-free-7.1.0-desktop.zip -d "$FONT_DIR/fontawesome-free-7"
+rm fontawesome-free-7.1.0.desktop.zip
