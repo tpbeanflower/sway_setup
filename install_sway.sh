@@ -47,8 +47,7 @@ if [[ $confirm != "y" && $confirm != "Y" ]]; then
 fi
 
 DISPLAY_PKGS=(
-    "lightdm"
-    # "gdm"
+    "gdm"
 )
 
 SWAY_CORE=(
@@ -82,7 +81,6 @@ GENERAL_PKGS=(
 if [[ "$DISTRO" == "fedora" ]]; then
     FEDORA_PKGS=(
         "NetworkManager"
-        "lightdm-gtk"
     )
     sudo dnf upgrade -y
     sudo dnf install -y "${DISPLAY_PKGS[@]}"
@@ -93,8 +91,6 @@ if [[ "$DISTRO" == "fedora" ]]; then
 elif [[ "$DISTRO" == "arch" ]]; then
     ARCH_PKGS=(
         "networkmanager"
-        "ttf-jetbrains-mono-nerd"
-        "lightdm-gtk-greeter"
     )
     sudo pacman -Syu --noconfirm
     sudo pacman -S --noconfirm "${DISPLAY_PKGS[@]}"
@@ -105,8 +101,8 @@ elif [[ "$DISTRO" == "arch" ]]; then
 fi
 
 sudo systemctl enable NetworkManager.service
-# sudo systemctl enable gdm.service
-sudo systemctl enable lightdm.service
+sudo systemctl enable gdm.service
+sudo systemctl set-default graphical.target
 
 # Setup folders and copy the config files
 xdg-user-dirs-update
