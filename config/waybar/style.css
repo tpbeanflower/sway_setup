@@ -1,5 +1,5 @@
 * {
-  font-family: 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
+  font-family: 'JetBrainsMono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
   font-size: 13px;
 }
 
@@ -127,9 +127,9 @@ button:hover {
 }
 
 #battery {
-  /* color: #81b29a; */
-  background-color: #ffffff;
-  color: #000000;
+  color: #81b29a;
+  /* background-color: #ffffff; */
+  /* color: #000000; */
 }
 
 #battery.charging, #battery.plugged {
@@ -200,7 +200,7 @@ label:focus {
 }
 
 #backlight {
-    background-color: #90b1b1;
+    background-color: #8ebaa4;
 }
 
 #network {

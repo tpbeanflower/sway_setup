@@ -115,9 +115,15 @@ cp -r ./config/. "${CONFIG_DIR}/"
 
 # Install fonts
 mkdir -p $FONT_DIR
-wget -q --force-progress https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
+msg "Downloading JetBrainsMono Fonts..."
+wget -q https://github.com/JetBrains/JetBrainsMono/releases/download/v2.304/JetBrainsMono-2.304.zip
+msg "Downloading JetBrainsMono Nerd Fonts..."
+wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
+msg "Downloading Font-Awesome Fonts..."
+wget -q https://github.com/FortAwesome/Font-Awesome/releases/download/7.1.0/fontawesome-free-7.1.0-desktop.zip
+unzip JetBrainsMono.zip -d "$FONT_DIR/jetbrains-mono"
 unzip JetBrainsMono.zip -d "$FONT_DIR/jetbrains-mono-nerd-font"
-rm JetBrainsMono.zip
-wget -q --force-progress https://github.com/FortAwesome/Font-Awesome/releases/download/7.1.0/fontawesome-free-7.1.0-desktop.zip
 unzip fontawesome-free-7.1.0-desktop.zip -d "$FONT_DIR/fontawesome-free-7"
+rm JetBrainsMono-2.304.zip
+rm JetBrainsMono.zip
 rm fontawesome-free-7.1.0-desktop.zip

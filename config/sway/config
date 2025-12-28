@@ -257,6 +257,7 @@ exec systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DES
 # for dbus
 # exec dbus-update-activation-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
 
+exec lxpolkit
 exec blueman-applet
 exec $HOME/Applications/Nextcloud.AppImage --background
 
