@@ -46,6 +46,10 @@ if [[ $confirm != "y" && $confirm != "Y" ]]; then
     exit 1
 fi
 
+ESSENTIALS=(
+    "xdg-user-dirs"
+)
+
 DISPLAY_PKGS=(
     "gdm"
 )
@@ -121,8 +125,11 @@ msg "Downloading JetBrainsMono Nerd Fonts..."
 wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
 msg "Downloading Font-Awesome Fonts..."
 wget -q https://github.com/FortAwesome/Font-Awesome/releases/download/7.1.0/fontawesome-free-7.1.0-desktop.zip
+msg "Installing JetBrainsMono Fonts..."
 unzip JetBrainsMono.zip -d "$FONT_DIR/jetbrains-mono"
+msg "Installing JetBrainsMono Nerd Fonts..."
 unzip JetBrainsMono.zip -d "$FONT_DIR/jetbrains-mono-nerd-font"
+msg "Installing Font-Awesome Fonts..."
 unzip fontawesome-free-7.1.0-desktop.zip -d "$FONT_DIR/fontawesome-free-7"
 rm JetBrainsMono-2.304.zip
 rm JetBrainsMono.zip
