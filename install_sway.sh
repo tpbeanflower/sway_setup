@@ -84,9 +84,9 @@ GENERAL_PKGS=(
 
 if [[ "$DISTRO" == "fedora" ]]; then
     FEDORA_PKGS=(
-        "NetworkManager"
     )
     sudo dnf upgrade -y
+    sudo dnf instlal -y "${ESSENTIALS[@]}"
     sudo dnf install -y "${DISPLAY_PKGS[@]}"
     sudo dnf install -y "${SWAY_CORE[@]}"
     sudo dnf install -y "${SWAY_PKGS[@]}"
@@ -94,9 +94,9 @@ if [[ "$DISTRO" == "fedora" ]]; then
     sudo dnf install -y "${FEDORA_PKGS[@]}"
 elif [[ "$DISTRO" == "arch" ]]; then
     ARCH_PKGS=(
-        "networkmanager"
     )
     sudo pacman -Syu --noconfirm
+    sudo pacman -S --noconfirm "${ESSENTIALS[@]}"
     sudo pacman -S --noconfirm "${DISPLAY_PKGS[@]}"
     sudo pacman -S --noconfirm "${SWAY_CORE[@]}"
     sudo pacman -S --noconfirm "${SWAY_PKGS[@]}"
@@ -104,16 +104,12 @@ elif [[ "$DISTRO" == "arch" ]]; then
     sudo pacman -S --noconfirm "${ARCH_PKGS[@]}"
 fi
 
-sudo systemctl enable NetworkManager.service
+# Setup folders and copy the config files
+LC_ALL=C.UTF-8 xdg-user-dirs-update --force
+
+sysmtectl --user enable xdg-user-dirs.service
 sudo systemctl enable gdm.service
 sudo systemctl set-default graphical.target
-
-# Setup folders and copy the config files
-xdg-user-dirs-update
-# mkdir -p "${CONFIG_DIR}/sway"
-# mkdir -p "${CONFIG_DIR}/waybar"
-# mkdir -p "${CONFIG_DIR}/rofi"
-# mkdir -p "${CONFIG_DIR}/foot"
 
 cp -r ./config/. "${CONFIG_DIR}/"
 
@@ -126,7 +122,7 @@ wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrai
 msg "Downloading Font-Awesome Fonts..."
 wget -q https://github.com/FortAwesome/Font-Awesome/releases/download/7.1.0/fontawesome-free-7.1.0-desktop.zip
 msg "Installing JetBrainsMono Fonts..."
-unzip JetBrainsMono.zip -d "$FONT_DIR/jetbrains-mono"
+unzip JetBrainsMono-2.304.zip -d "$FONT_DIR/jetbrains-mono"
 msg "Installing JetBrainsMono Nerd Fonts..."
 unzip JetBrainsMono.zip -d "$FONT_DIR/jetbrains-mono-nerd-font"
 msg "Installing Font-Awesome Fonts..."
