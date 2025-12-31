@@ -107,7 +107,7 @@ fi
 # Setup folders and copy the config files
 LC_ALL=C.UTF-8 xdg-user-dirs-update --force
 
-sysmtectl --user enable xdg-user-dirs.service
+# systemctl --user enable xdg-user-dirs.service
 sudo systemctl enable gdm.service
 sudo systemctl set-default graphical.target
 
