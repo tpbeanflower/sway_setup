@@ -17,7 +17,7 @@ help() {
     echo "Options:"
     echo "  -h        Display this help message"
     echo "  -d        Provide the distribution name"
-    echo "  DISTRO    fedora or arch"
+    echo "  DISTRO    fedora, arch or debian"
     exit 0
 }
 
@@ -50,17 +50,17 @@ ESSENTIALS=(
     "xdg-user-dirs"
 )
 
-DISPLAY_PKGS=(
-    "gdm"
-)
-
+# DISPLAY_PKGS=(
+#     "gdm"
+# )
+#
 SWAY_CORE=(
     "sway"
     "swaybg"
     "swayidle"
     "swaylock"
     "swayimg"
-    "swaync"
+    # "swaync"
     "waybar"
 )
 
@@ -79,38 +79,61 @@ SWAY_PKGS=(
 GENERAL_PKGS=(
     "foot"
     "wl-clipboard"
-    "firefox"
+    # "firefox"
 )
 
+msg "Installing packages..."
 if [[ "$DISTRO" == "fedora" ]]; then
     FEDORA_PKGS=(
+        "gdm"
+        "mako"
+        "firefox"
     )
     sudo dnf upgrade -y
     sudo dnf instlal -y "${ESSENTIALS[@]}"
-    sudo dnf install -y "${DISPLAY_PKGS[@]}"
+    # sudo dnf install -y "${DISPLAY_PKGS[@]}"
     sudo dnf install -y "${SWAY_CORE[@]}"
     sudo dnf install -y "${SWAY_PKGS[@]}"
     sudo dnf install -y "${GENERAL_PKGS[@]}"
     sudo dnf install -y "${FEDORA_PKGS[@]}"
 elif [[ "$DISTRO" == "arch" ]]; then
     ARCH_PKGS=(
+        "gdm"
+        "mako"
+        "firefox"
     )
     sudo pacman -Syu --noconfirm
     sudo pacman -S --noconfirm "${ESSENTIALS[@]}"
-    sudo pacman -S --noconfirm "${DISPLAY_PKGS[@]}"
+    # sudo pacman -S --noconfirm "${DISPLAY_PKGS[@]}"
     sudo pacman -S --noconfirm "${SWAY_CORE[@]}"
     sudo pacman -S --noconfirm "${SWAY_PKGS[@]}"
     sudo pacman -S --noconfirm "${GENERAL_PKGS[@]}"
     sudo pacman -S --noconfirm "${ARCH_PKGS[@]}"
+elif [[ "$DISTRO" == "debian" ]]; then
+    DEBIAN_PKGS=(
+        "gdm3"
+        "mako-notifier"
+        "firefox-esr"
+    )
+    sudo apt-get update && sudo apt-get upgrade -y
+    sudo apt-get install -y "${ESSENTIALS[@]}"
+    sudo apt-get install -y "${SWAY_CORE[@]}"
+    sudo apt-get install -y "${SWAY_PKGS[@]}"
+    sudo apt-get install -y "${GENERAL_PKGS[@]}"
+    sudo apt-get install -y "${DEBIAN_PKGS[@]}"
 fi
 
 # Setup folders and copy the config files
+msg "Creating user directories..."
 LC_ALL=C.UTF-8 xdg-user-dirs-update --force
 
 # systemctl --user enable xdg-user-dirs.service
+msg "Enabling gdm service..."
 sudo systemctl enable gdm.service
+msg "Enabling graphical login..."
 sudo systemctl set-default graphical.target
 
+msg "Copying config files..."
 cp -r ./config/. "${CONFIG_DIR}/"
 
 # Install fonts
